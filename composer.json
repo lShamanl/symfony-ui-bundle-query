@@ -1,0 +1,54 @@
+{
+    "name": "lshamanl/symfony-ui-bundle",
+    "description": "Symfony API-Adapter, UI-Bundle, Filters",
+    "type": "symfony-bundle",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "alexander.erin",
+            "email": "sanyaerin@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bundle\\UIBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bundle\\UIBundle\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "symfony/dependency-injection": "^5.2",
+        "symfony/config": "^5.2",
+        "doctrine/annotations": "^1.13",
+        "doctrine/doctrine-bundle": "^2.4",
+        "doctrine/doctrine-migrations-bundle": "^3.1",
+        "composer/package-versions-deprecated": "^1.11",
+        "doctrine/orm": "^2.9",
+        "symfony/serializer": "^5.2",
+        "symfony/validator": "^5.2",
+        "symfony/translation": "^5.2",
+        "zircote/swagger-php": "^3.2",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12.81",
+        "phpunit/phpunit": "^9.5",
+        "overtrue/phplint": "^3.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "roave/security-advisories": "dev-master",
+        "vimeo/psalm": "^4.6",
+        "fakerphp/faker": "1.13.0",
+        "phpmetrics/phpmetrics": "^2.7"
+    },
+    "scripts": {
+        "lint": "phplint",
+        "phpcs-check": "phpcs",
+        "phpcs-fix": "phpcbf",
+        "phpstan": "phpstan",
+        "psalm": "psalm"
+    }
+}
