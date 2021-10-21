@@ -1596,16 +1596,16 @@
         },
         {
             "name": "lshamanl/symfony-ui-bundle-foundation",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lShamanl/symfony-ui-bundle-foundation.git",
-                "reference": "7b680eb7260f526053be4d3dc7715ad09468d8c5"
+                "reference": "9cff0761bdbdcc1605c99c0b93a243b91c5cdc20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lShamanl/symfony-ui-bundle-foundation/zipball/7b680eb7260f526053be4d3dc7715ad09468d8c5",
-                "reference": "7b680eb7260f526053be4d3dc7715ad09468d8c5",
+                "url": "https://api.github.com/repos/lShamanl/symfony-ui-bundle-foundation/zipball/9cff0761bdbdcc1605c99c0b93a243b91c5cdc20",
+                "reference": "9cff0761bdbdcc1605c99c0b93a243b91c5cdc20",
                 "shasum": ""
             },
             "require": {
@@ -1652,9 +1652,9 @@
             "description": "Symfony UI Bundle Foundation",
             "support": {
                 "issues": "https://github.com/lShamanl/symfony-ui-bundle-foundation/issues",
-                "source": "https://github.com/lShamanl/symfony-ui-bundle-foundation/tree/0.1.1"
+                "source": "https://github.com/lShamanl/symfony-ui-bundle-foundation/tree/0.1.2"
             },
-            "time": "2021-10-21T08:33:30+00:00"
+            "time": "2021-10-21T11:05:41+00:00"
         },
         {
             "name": "psr/cache",

@@ -3,7 +3,7 @@ services:
         autowire: true
         autoconfigure: true
 
-    SymfonySymfonyBundle\UIBundle\Query\:
+    SymfonyBundle\UIBundle\Query\:
         resource: '../../../src/*'
         exclude:
             - '../../../src/DependencyInjection/'
