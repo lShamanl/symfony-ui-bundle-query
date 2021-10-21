@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
-use Bundle\UIBundle\Core\Components\Exception\DomainException;
+use SymfonyBundle\UIBundle\Foundation\Core\Components\Exception\DomainException;
 
-/**
- * UIBundleQuery
- */
 class Sort
 {
     public const SORT_ASC = 'ASC';

@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
-use Bundle\UIBundle\Core\Dto\Filters;
-use Bundle\UIBundle\Core\Dto\Sorts;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * UIBundleQuery
- */
 class FetcherContext
 {
     public QueryBuilder $queryBuilder;
@@ -137,6 +134,7 @@ class FetcherContext
                 $whiteList[] = "{$property}.{$subProperty}";
             }
 
+            #todo: потенциально опасное место
             $whiteList = array_merge(
                 $whiteList,
                 $this->getChildAssocWhiteList($subEntityMeta->associationMappings, $property)

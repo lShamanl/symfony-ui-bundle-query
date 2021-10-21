@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Components\Helpers;
+namespace SymfonyBundle\UIBundle\Query\Core\Components\Helpers;
 
-use Bundle\UIBundle\Core\Service\Filter\Pagination;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Pagination;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * UIBundleQuery
- */
 class PaginationMaker
 {
     public const DEFAULT_PAGE = 1;

@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
-use Bundle\UIBundle\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
 
-/**
- * UIBundleQuery
- */
 class AutowareFilters
 {
     public static function autoware(Filters $filters, FilterSqlBuilder $appSqlBuilder, string $rootEntityAlias): void
@@ -49,26 +46,26 @@ class AutowareFilters
             case FilterSqlBuilder::NOT_NULL:
                 $appSqlBuilder->notNull($aliasPath);
                 break;
-            case '<':
-            case 'lt':
-            case FilterSqlBuilder::LESS_THAN:
-                $appSqlBuilder->lessThan($aliasPath, $value);
-                break;
-            case '>':
-            case 'gt':
-            case FilterSqlBuilder::GREATER_THAN:
-                $appSqlBuilder->greaterThan($aliasPath, $value);
-                break;
-            case '<=':
-            case 'lte':
-            case FilterSqlBuilder::LESS_OR_EQUALS:
-                $appSqlBuilder->lessOrEquals($aliasPath, $value);
-                break;
-            case '>=':
-            case 'gte':
-            case FilterSqlBuilder::GREATER_OR_EQUALS:
-                $appSqlBuilder->greaterOrEquals($aliasPath, $value);
-                break;
+//            case '<':
+//            case 'lt':
+//            case FilterSqlBuilder::LESS_THAN:
+//                $appSqlBuilder->lessThan($aliasPath, $value);
+//                break;
+//            case '>':
+//            case 'gt':
+//            case FilterSqlBuilder::GREATER_THAN:
+//                $appSqlBuilder->greaterThan($aliasPath, $value);
+//                break;
+//            case '<=':
+//            case 'lte':
+//            case FilterSqlBuilder::LESS_OR_EQUALS:
+//                $appSqlBuilder->lessOrEquals($aliasPath, $value);
+//                break;
+//            case '>=':
+//            case 'gte':
+//            case FilterSqlBuilder::GREATER_OR_EQUALS:
+//                $appSqlBuilder->greaterOrEquals($aliasPath, $value);
+//                break;
             case FilterSqlBuilder::LIKE:
                 $appSqlBuilder->like($aliasPath, $value);
                 break;

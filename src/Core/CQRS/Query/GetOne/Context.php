@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\CQRS\Query\GetOne;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne;
 
-use Bundle\UIBundle\Core\Components\AbstractContext;
-use Bundle\UIBundle\Core\Components\Interfaces\QueryContextInterface;
-use Bundle\UIBundle\Core\Contract\Command\OutputContractInterface;
-use Bundle\UIBundle\Core\Dto\Locale;
-use Bundle\UIBundle\Core\Dto\TranslationDto;
+use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
+use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\TranslationDto;
+use SymfonyBundle\UIBundle\Query\Core\Components\Interfaces\QueryContextInterface;
 
-/**
- * UIBundleQuery
- */
 class Context extends AbstractContext implements QueryContextInterface
 {
     protected string $entityId;

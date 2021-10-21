@@ -2,23 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\CQRS\Query\Search;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Search;
 
-use Bundle\UIBundle\Core\Components\AbstractContext;
-use Bundle\UIBundle\Core\Components\Interfaces\QueryContextInterface;
-use Bundle\UIBundle\Core\Contract\Command\OutputContractInterface;
-use Bundle\UIBundle\Core\Dto\Filters;
-use Bundle\UIBundle\Core\Dto\Locale;
-use Bundle\UIBundle\Core\Dto\PropertyNameConvertDto;
-use Bundle\UIBundle\Core\Dto\Sorts;
-use Bundle\UIBundle\Core\Dto\TranslationDto;
-use Bundle\UIBundle\Core\Service\Filter\Pagination;
-use Bundle\UIBundle\Core\Service\Filter\SearchQuery;
+use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
+use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\PropertyNameConvertDto;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\TranslationDto;
+use SymfonyBundle\UIBundle\Query\Core\Components\Interfaces\QueryContextInterface;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Pagination;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\SearchQuery;
 use Closure;
 
-/**
- * UIBundleQuery
- */
 class Context extends AbstractContext implements QueryContextInterface
 {
     /** @var class-string */

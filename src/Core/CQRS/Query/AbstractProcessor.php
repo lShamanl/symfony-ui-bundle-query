@@ -2,21 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\CQRS\Query;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query;
 
-use Bundle\UIBundle\Core\Components\Interfaces\QueryContextInterface;
-use Bundle\UIBundle\Core\Contract\Command\LocalizationOutputContractInterface;
-use Bundle\UIBundle\Core\Contract\Command\OutputContractInterface;
-use Bundle\UIBundle\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Foundation\Core\Contract\LocalizationOutputContractInterface;
+use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Query\Core\Components\Interfaces\QueryContextInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * UIBundleQuery
- */
-abstract class AbstractProcessor extends \Bundle\UIBundle\Core\Components\AbstractProcessor
+abstract class AbstractProcessor extends \SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractProcessor
 {
     protected EventDispatcherInterface $dispatcher;
     protected SerializerInterface $serializer;
@@ -44,8 +41,8 @@ abstract class AbstractProcessor extends \Bundle\UIBundle\Core\Components\Abstra
         $outputDtoIsLocalization = is_subclass_of($outputDtoClass, LocalizationOutputContractInterface::class);
         if ($outputDtoIsLocalization && $actionContext->hasLocale()) {
             return new $outputDtoClass($entity, $actionContext->getLocale()?->getPriorityLang());
-        } else {
-            return new $outputDtoClass($entity);
         }
+
+        return new $outputDtoClass($entity);
     }
 }

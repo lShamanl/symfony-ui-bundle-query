@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Components\Helpers;
+namespace SymfonyBundle\UIBundle\Query\Core\Components\Helpers;
 
-use Bundle\UIBundle\Core\Dto\Sorts;
-use Bundle\UIBundle\Core\Service\Filter\Sort;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Sort;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * UIBundleQuery
- */
 class SortsMaker
 {
     public static function make(Request $request): Sorts

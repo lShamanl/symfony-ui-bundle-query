@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Contract\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Contract\Filter;
 
-use Bundle\UIBundle\Core\Contract\Filter\Traits\SortContractTrait;
+use SymfonyBundle\UIBundle\Query\Core\Contract\Filter\Traits\SortContractTrait;
 
-/**
- * UIBundleQuery
- */
 class Sort
 {
     use SortContractTrait;

@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
-use Bundle\UIBundle\Core\Dto\Filters;
-use Bundle\UIBundle\Core\Dto\Sorts;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Parameter;
 
-/**
- * UIBundleQuery
- */
 class Fetcher
 {
     private const AGGREGATE_ALIAS = 'entity';

@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Dto;
+namespace SymfonyBundle\UIBundle\Query\Core\Dto;
 
-use Bundle\UIBundle\Core\Service\Filter\Filter;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Filter;
 use TypeError;
 
-/**
- * UIBundleQuery
- */
 class Filters
 {
     /** @var Filter[] */

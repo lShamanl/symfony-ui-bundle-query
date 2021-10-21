@@ -2,18 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\ParamConverter;
+namespace SymfonyBundle\UIBundle\Query\ParamConverter;
 
-use Bundle\UIBundle\Core\Components\Helpers\PaginationMaker;
-use Bundle\UIBundle\Core\Service\Filter\Pagination;
+use SymfonyBundle\UIBundle\Query\Core\Components\Helpers\PaginationMaker;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Pagination;
 use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
-/**
- * UIBundleQuery
- */
 class PaginationResolver implements ArgumentValueResolverInterface
 {
     public function supports(Request $request, ArgumentMetadata $argument): bool

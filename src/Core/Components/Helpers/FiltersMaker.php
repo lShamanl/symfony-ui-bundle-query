@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Components\Helpers;
+namespace SymfonyBundle\UIBundle\Query\Core\Components\Helpers;
 
-use Bundle\UIBundle\Core\Dto\Filters;
-use Bundle\UIBundle\Core\Service\Filter\Filter;
-use Bundle\UIBundle\Core\Service\Filter\FilterSqlBuilder;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Filter;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\FilterSqlBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * UIBundleQuery
- */
 class FiltersMaker
 {
     /**

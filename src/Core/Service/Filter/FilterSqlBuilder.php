@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
-use Bundle\UIBundle\Core\Dto\Sorts;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
 use DateTimeInterface;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * UIBundleQuery
- */
 class FilterSqlBuilder
 {
     public const NOT_IN = 'not-in';
@@ -156,40 +153,44 @@ class FilterSqlBuilder
 
     public function lessThan(string $field, mixed $lte): self
     {
-        if (!empty($values)) {
-            $lteBind = $this->bind($lte);
-            $this->queryBuilder->andWhere("{$field} < :{$lteBind}");
-        }
+        #todo: не рабочий функционал
+//        if (!empty($values)) {
+//            $lteBind = $this->bind($lte);
+//            $this->queryBuilder->andWhere("{$field} < :{$lteBind}");
+//        }
 
         return $this;
     }
 
     public function greaterThan(string $field, mixed $gte): self
     {
-        if (!empty($values)) {
-            $gteBind = $this->bind($gte);
-            $this->queryBuilder->andWhere("{$field} > :{$gteBind}");
-        }
+        #todo: не рабочий функционал
+//        if (!empty($values)) {
+//            $gteBind = $this->bind($gte);
+//            $this->queryBuilder->andWhere("{$field} > :{$gteBind}");
+//        }
 
         return $this;
     }
 
     public function lessOrEquals(string $field, mixed $lte): self
     {
-        if (!empty($values)) {
-            $lteBind = $this->bind($lte);
-            $this->queryBuilder->andWhere("{$field} <= :{$lteBind}");
-        }
+        #todo: не рабочий функционал
+//        if (!empty($values)) {
+//            $lteBind = $this->bind($lte);
+//            $this->queryBuilder->andWhere("{$field} <= :{$lteBind}");
+//        }
 
         return $this;
     }
 
     public function greaterOrEquals(string $field, mixed $gte): self
     {
-        if (!empty($values)) {
-            $gteBind = $this->bind($gte);
-            $this->queryBuilder->andWhere("{$field} >= :{$gteBind}");
-        }
+        #todo: не рабочий функционал
+//        if (!empty($values)) {
+//            $gteBind = $this->bind($gte);
+//            $this->queryBuilder->andWhere("{$field} >= :{$gteBind}");
+//        }
 
         return $this;
     }
@@ -217,8 +218,8 @@ class FilterSqlBuilder
     ): self {
         $this->range(
             $field,
-            $gte ? $gte->format('Y-m-d H:i:s') : null,
-            $lte ? $lte->format('Y-m-d H:i:s') : null
+            $gte?->format('Y-m-d H:i:s'),
+            $lte?->format('Y-m-d H:i:s')
         );
 
         return $this;

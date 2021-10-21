@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * UIBundleQuery
- */
 class FetcherFactory
 {
     private EntityManagerInterface $entityManager;

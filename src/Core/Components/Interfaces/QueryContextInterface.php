@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Components\Interfaces;
+namespace SymfonyBundle\UIBundle\Query\Core\Components\Interfaces;
 
-use Bundle\UIBundle\Core\Contract\Command\OutputContractInterface;
-use Bundle\UIBundle\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
 
-/**
- * UIBundleQuery
- */
 interface QueryContextInterface
 {
     public function hasLocale(): bool;

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\CQRS\Query\Search;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Search;
 
-use Bundle\UIBundle\Core\Components\AbstractContext;
-use Bundle\UIBundle\Core\Contract\ApiFormatter;
-use Bundle\UIBundle\Core\CQRS\Query\AbstractProcessor;
-use Bundle\UIBundle\Core\Dto\Filters;
-use Bundle\UIBundle\Core\Dto\Locale;
-use Bundle\UIBundle\Core\Service\Filter\FetcherFactory;
-use Bundle\UIBundle\Core\Service\Filter\Filter;
+use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
+use SymfonyBundle\UIBundle\Foundation\Core\Contract\ApiFormatter;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\AbstractProcessor;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\FetcherFactory;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Filter;
 use Closure;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,9 +18,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * UIBundleQuery
- */
 class Processor extends AbstractProcessor
 {
     private FetcherFactory $fetcherFactory;

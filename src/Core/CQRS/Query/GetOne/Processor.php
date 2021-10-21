@@ -2,22 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\CQRS\Query\GetOne;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne;
 
-use Bundle\UIBundle\Core\Components\AbstractContext;
-use Bundle\UIBundle\Core\Contract\ApiFormatter;
-use Bundle\UIBundle\Core\CQRS\Query\AbstractProcessor;
-use Bundle\UIBundle\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Foundation\Core\Contract\ApiFormatter;
+use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
+use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
+use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\AbstractProcessor;
 use Doctrine\ORM\EntityNotFoundException;
 
-/**
- * UIBundleQuery
- */
 class Processor extends AbstractProcessor
 {
     /**
      * @param Context $actionContext
      * @throws EntityNotFoundException
+     * @throws \JsonException
      */
     public function process(AbstractContext $actionContext): void
     {

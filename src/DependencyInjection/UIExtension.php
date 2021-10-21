@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\DependencyInjection;
+namespace SymfonyBundle\UIBundle\Query\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;

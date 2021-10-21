@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
-use Bundle\UIBundle\Core\Dto\Filters;
-use Bundle\UIBundle\Core\Dto\Sorts;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
 
-/**
- * UIBundleQuery
- */
 class SearchQuery
 {
     private Pagination $pagination;

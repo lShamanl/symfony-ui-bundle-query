@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Contract\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Contract\Filter;
 
-use Bundle\UIBundle\Core\Contract\Filter\Traits\PaginationContractTrait;
+use SymfonyBundle\UIBundle\Query\Core\Contract\Filter\Traits\PaginationContractTrait;
 
-/**
- * UIBundleQuery
- */
 class Pagination
 {
     use PaginationContractTrait;

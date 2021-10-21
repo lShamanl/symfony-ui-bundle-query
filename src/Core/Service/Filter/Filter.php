@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Service\Filter;
+namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
-/**
- * UIBundleQuery
- */
 class Filter
 {
     private const DEFAULT_MODE = FilterSqlBuilder::EQUALS;

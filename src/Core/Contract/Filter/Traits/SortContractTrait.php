@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bundle\UIBundle\Core\Contract\Filter\Traits;
+namespace SymfonyBundle\UIBundle\Query\Core\Contract\Filter\Traits;
 
 use OpenApi\Annotations as OA;
 
-/**
- * UIBundleQuery
- */
 trait SortContractTrait
 {
     /**
