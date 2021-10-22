@@ -126,6 +126,7 @@ class Fetcher
         $qb = $this->entityManager->getRepository($this->context->entityClass)
             ->createQueryBuilder($aggregateAlias)
             ->where("$aggregateAlias.{$idPropertyName} IN (" . implode(',', $idsPrepared) . ')');
+        #todo: здесь нужно еще прокинуть сортировку, которую ожидал пользователь
 
         if ($eager) {
             $uniqueAssocRelations = array_unique(
