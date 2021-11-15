@@ -78,6 +78,7 @@ class Processor extends AbstractProcessor
 
         $searchResult = $fetcher->getByIds(
             $fetcher->searchEntityIds(),
+            $sorts,
             $actionContext->getEagerMode()
         );
 

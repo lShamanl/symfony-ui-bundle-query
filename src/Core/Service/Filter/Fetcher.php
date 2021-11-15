@@ -111,7 +111,7 @@ class Fetcher
         return $this->context;
     }
 
-    public function getByIds(array $ids, bool $eager = true): array
+    public function getByIds(array $ids, Sorts $sorts, bool $eager = true): array
     {
         $aggregateAlias = self::AGGREGATE_ALIAS;
         $idPropertyName = $this->entityClassMetadata->identifier[0];
@@ -126,11 +126,14 @@ class Fetcher
         $qb = $this->entityManager->getRepository($this->context->entityClass)
             ->createQueryBuilder($aggregateAlias)
             ->where("$aggregateAlias.{$idPropertyName} IN (" . implode(',', $idsPrepared) . ')');
-        #todo: здесь нужно еще прокинуть сортировку, которую ожидал пользователь
+
+        foreach ($sorts->toArray() as $sort) {
+            $qb->addOrderBy("{$aggregateAlias}.{$sort->getField()}", $sort->getDirection());
+        }
 
         if ($eager) {
             $uniqueAssocRelations = array_unique(
-                array_map(function (string $property) {
+                array_map(static function (string $property) {
                     $explodeProperty = explode('.', $property);
                     array_pop($explodeProperty);
                     return implode('.', $explodeProperty);
@@ -144,7 +147,7 @@ class Fetcher
                     $path = Helper::makeAliasPathFromPropertyPath("$aggregateAlias.$relationPath");
                     $alias = Helper::pathToAlias($path);
 
-                    if (in_array($alias, $joins)) {
+                    if (in_array($alias, $joins, true)) {
                         continue;
                     }
                     $qb->leftJoin($path, $alias)->addSelect($alias);
