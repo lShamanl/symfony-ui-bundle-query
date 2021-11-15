@@ -117,7 +117,7 @@ class Processor extends AbstractProcessor
             $actionContext->getOutputFormat()
         );
         $this->responseHeaders = [
-            ['Content-Type' => "application/" . $actionContext->getOutputFormat()]
+            'Content-Type' => "application/" . $actionContext->getOutputFormat()
         ];
     }
 
