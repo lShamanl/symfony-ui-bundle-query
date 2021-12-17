@@ -111,6 +111,45 @@ class Fetcher
         return $this->context;
     }
 
+    public function getById(string $id, bool $eager = true): array
+    {
+        $aggregateAlias = self::AGGREGATE_ALIAS;
+        $idPropertyName = $this->entityClassMetadata->identifier[0];
+
+        $qb = $this->entityManager->getRepository($this->context->entityClass)
+            ->createQueryBuilder($aggregateAlias)
+            ->where("$aggregateAlias.{$idPropertyName} = :id'")
+            ->setParameter('id', $id);
+
+        if ($eager) {
+            $uniqueAssocRelations = array_unique(
+                array_map(static function (string $property) {
+                    $explodeProperty = explode('.', $property);
+                    array_pop($explodeProperty);
+                    return implode('.', $explodeProperty);
+                }, $this->context->getEntityAssociationWhiteList())
+            );
+            $joins = [];
+            foreach ($uniqueAssocRelations as $propertyPath) {
+                $explodePropertyPath = explode('.', $propertyPath);
+                for ($level = 1, $levelMax = count($explodePropertyPath); $level <= $levelMax; $level++) {
+                    $relationPath = Helper::makeRelationPath($explodePropertyPath, $level);
+                    $path = Helper::makeAliasPathFromPropertyPath("$aggregateAlias.$relationPath");
+                    $alias = Helper::pathToAlias($path);
+
+                    if (in_array($alias, $joins, true)) {
+                        continue;
+                    }
+                    $qb->leftJoin($path, $alias)->addSelect($alias);
+                    $joins[] = $alias;
+                }
+            }
+        }
+
+        #todo: чекнуть что тут происходит
+        return $qb->getQuery()->getResult()[0];
+    }
+
     public function getByIds(array $ids, Sorts $sorts, bool $eager = true): array
     {
         $aggregateAlias = self::AGGREGATE_ALIAS;
