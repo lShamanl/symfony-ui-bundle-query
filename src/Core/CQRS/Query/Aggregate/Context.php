@@ -15,30 +15,30 @@ use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Pagination;
 class Context extends AbstractContext implements QueryContextInterface
 {
     protected string $aggregateId;
-//    /** @var class-string<OutputContractInterface> */
-//    protected string $outputDtoClass;
-//    protected ?Locale $locale;
-//    /** @var class-string */
-//    protected string $targetEntityClass;
-//    protected array $translations;
+    /** @var class-string<OutputContractInterface> */
+    protected string $outputDtoClass;
+    protected ?Locale $locale;
+    /** @var class-string */
+    protected string $targetEntityClass;
+    protected array $translations;
     protected Filters $filters;
-//    protected string $outputFormat;
+    protected string $outputFormat;
 
     public function __construct(
         string $aggregateId,
-//        string $outputFormat,
-//        string $outputDtoClass,
-//        string $targetEntityClass,
-//        array $translations = [],
-//        Locale $locale = null,
+        string $outputFormat,
+        string $outputDtoClass,
+        string $targetEntityClass,
+        array $translations = [],
+        Locale $locale = null,
         Filters $filters = null
     ) {
-//        $this->targetEntityClass = $targetEntityClass;
-//        $this->outputDtoClass = $outputDtoClass;
-//        $this->translations = $translations;
-//        $this->locale = $locale;
+        $this->targetEntityClass = $targetEntityClass;
+        $this->outputDtoClass = $outputDtoClass;
+        $this->translations = $translations;
+        $this->locale = $locale;
         $this->filters = $filters ?? new Filters();
-//        $this->outputFormat = $outputFormat;
+        $this->outputFormat = $outputFormat;
         $this->aggregateId = $aggregateId;
     }
 
@@ -51,36 +51,36 @@ class Context extends AbstractContext implements QueryContextInterface
     {
         $this->filters = $filters;
     }
-//
-//    public function getOutputFormat(): string
-//    {
-//        return $this->outputFormat;
-//    }
-//
-//    public function setOutputFormat(string $outputFormat): void
-//    {
-//        $this->outputFormat = $outputFormat;
-//    }
-//
-//    public function getTargetEntityClass(): string
-//    {
-//        return $this->targetEntityClass;
-//    }
-//
-//    public function setTargetEntityClass(string $targetEntityClass): void
-//    {
-//        $this->targetEntityClass = $targetEntityClass;
-//    }
-//
-//    public function getTranslations(): array
-//    {
-//        return $this->translations;
-//    }
-//
-//    public function setTranslations(array $translations): void
-//    {
-//        $this->translations = $translations;
-//    }
+
+    public function getOutputFormat(): string
+    {
+        return $this->outputFormat;
+    }
+
+    public function setOutputFormat(string $outputFormat): void
+    {
+        $this->outputFormat = $outputFormat;
+    }
+
+    public function getTargetEntityClass(): string
+    {
+        return $this->targetEntityClass;
+    }
+
+    public function setTargetEntityClass(string $targetEntityClass): void
+    {
+        $this->targetEntityClass = $targetEntityClass;
+    }
+
+    public function getTranslations(): array
+    {
+        return $this->translations;
+    }
+
+    public function setTranslations(array $translations): void
+    {
+        $this->translations = $translations;
+    }
 
     public function hasLocale(): bool
     {
