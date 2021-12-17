@@ -40,7 +40,7 @@ class Processor extends AbstractProcessor
         if (!$actionContext->getLocale() instanceof Locale) {
             $actionContext->setLocale($this->defaultLocale);
         }
-
+        
         $aggregateId = $actionContext->getAggregateId();
 
         $fetcher = $this->fetcherFactory->forEntity($actionContext->getTargetEntityClass());
@@ -50,7 +50,8 @@ class Processor extends AbstractProcessor
 
         $aggregate = $fetcher->getById(
             $aggregateId,
-            true
+            true,
+            $actionContext->getRelations()
         );
 
         $output = $this->createOutput($actionContext, $aggregate);

@@ -21,6 +21,7 @@ class Context extends AbstractContext implements QueryContextInterface
     /** @var class-string */
     protected string $targetEntityClass;
     protected array $translations;
+    protected array $relations;
     protected Filters $filters;
     protected string $outputFormat;
 
@@ -30,12 +31,14 @@ class Context extends AbstractContext implements QueryContextInterface
         string $outputDtoClass,
         string $targetEntityClass,
         array $translations = [],
+        array $relations = [],
         Locale $locale = null,
         Filters $filters = null
     ) {
         $this->targetEntityClass = $targetEntityClass;
         $this->outputDtoClass = $outputDtoClass;
         $this->translations = $translations;
+        $this->relations = $relations;
         $this->locale = $locale;
         $this->filters = $filters ?? new Filters();
         $this->outputFormat = $outputFormat;
@@ -80,6 +83,16 @@ class Context extends AbstractContext implements QueryContextInterface
     public function setTranslations(array $translations): void
     {
         $this->translations = $translations;
+    }
+
+    public function getRelations(): array
+    {
+        return $this->relations;
+    }
+
+    public function setRelations(array $relations): void
+    {
+        $this->relations = $relations;
     }
 
     public function hasLocale(): bool
