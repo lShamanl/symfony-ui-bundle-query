@@ -37,9 +37,9 @@ class Processor extends AbstractProcessor
      */
     public function process(AbstractContext $actionContext): void
     {
-        if (!$actionContext->getLocale() instanceof Locale) {
-            $actionContext->setLocale($this->defaultLocale);
-        }
+//        if (!$actionContext->getLocale() instanceof Locale) {
+//            $actionContext->setLocale($this->defaultLocale);
+//        }
 
         #todo: flow
         # - получили id аггрегата, получили список полей, которые хотим затянуть жадно в точечной нотации
@@ -47,42 +47,42 @@ class Processor extends AbstractProcessor
         # - сделали один запрос к БД
         # - намаппили результат на entity, прокинули в outputContract
         # - сделали сериалайз, выплюнули в контроллер
-        $aggregateId = $actionContext->getAggregateId();
-
-        $fetcher = $this->fetcherFactory->forEntity($actionContext->getTargetEntityClass());
-        $filters = $this->extractFilters($actionContext);
-
-        $fetcher->addFilters($filters);
-
-        $aggregateData = $fetcher->getById(
-            $aggregateId,
-            true
-        );
-
-        $aggregate = $aggregateData; #todo: тут намаппить на сущность данные
-
-        $output = $this->createOutput($actionContext, $aggregate);
-
-        if (!empty($actionContext->getTranslations()) && $actionContext->hasLocale()) {
-            /** @var Locale $locale */
-            $locale = $actionContext->getLocale();
-            $output = $this->translate(
-                $output,
-                $actionContext->getOutputFormat(),
-                $actionContext->getTranslations(),
-                $locale,
-                $this->translator,
-                $this->serializer,
-            );
-        }
-
-        $this->responseContent = $this->serializer->serialize(
-            ApiFormatter::prepare(['entity' => $output]),
-            $actionContext->getOutputFormat()
-        );
-        $this->responseHeaders = [
-            'Content-Type' => "application/" . $actionContext->getOutputFormat()
-        ];
+//        $aggregateId = $actionContext->getAggregateId();
+//
+//        $fetcher = $this->fetcherFactory->forEntity($actionContext->getTargetEntityClass());
+//        $filters = $this->extractFilters($actionContext);
+//
+//        $fetcher->addFilters($filters);
+//
+//        $aggregateData = $fetcher->getById(
+//            $aggregateId,
+//            true
+//        );
+//
+//        $aggregate = $aggregateData; #todo: тут намаппить на сущность данные
+//
+//        $output = $this->createOutput($actionContext, $aggregate);
+//
+//        if (!empty($actionContext->getTranslations()) && $actionContext->hasLocale()) {
+//            /** @var Locale $locale */
+//            $locale = $actionContext->getLocale();
+//            $output = $this->translate(
+//                $output,
+//                $actionContext->getOutputFormat(),
+//                $actionContext->getTranslations(),
+//                $locale,
+//                $this->translator,
+//                $this->serializer,
+//            );
+//        }
+//
+//        $this->responseContent = $this->serializer->serialize(
+//            ApiFormatter::prepare(['entity' => $output]),
+//            $actionContext->getOutputFormat()
+//        );
+//        $this->responseHeaders = [
+//            'Content-Type' => "application/" . $actionContext->getOutputFormat()
+//        ];
     }
 
     private function extractFilters(AbstractContext $actionContext): Filters
