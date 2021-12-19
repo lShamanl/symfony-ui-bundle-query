@@ -111,7 +111,7 @@ class Fetcher
         return $this->context;
     }
 
-    public function getById(string $id, bool $eager = true, array $relations): object
+    public function getById(string $id, bool $eager = true, array $relations = []): object
     {
         $aggregateAlias = self::AGGREGATE_ALIAS;
         $idPropertyName = $this->entityClassMetadata->identifier[0];
@@ -152,7 +152,7 @@ class Fetcher
                 }
             }
         }
-        
+
         return $qb->getQuery()->getResult()[0];
     }
 
