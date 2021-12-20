@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne;
 
 use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
 use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
