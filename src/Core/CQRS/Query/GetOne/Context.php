@@ -141,13 +141,14 @@ class Context extends AbstractContext implements QueryContextInterface
         $this->aggregateId = $aggregateId;
     }
 
-    public function isEager(): bool
+    public function getEagerMode(): bool
     {
         return $this->eager;
     }
 
-    public function setEager(bool $eager): void
+    public function setEagerMode(bool $eager): self
     {
         $this->eager = $eager;
+        return $this;
     }
 }
