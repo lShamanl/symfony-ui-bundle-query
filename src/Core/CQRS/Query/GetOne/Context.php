@@ -2,48 +2,60 @@
 
 declare(strict_types=1);
 
-namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate;
 
 use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
 use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
 use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
-use SymfonyBundle\UIBundle\Foundation\Core\Dto\TranslationDto;
 use SymfonyBundle\UIBundle\Query\Core\Components\Interfaces\QueryContextInterface;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Pagination;
 
 class Context extends AbstractContext implements QueryContextInterface
 {
-    protected string $entityId;
-    /** @var class-string */
-    protected string $targetEntityClass;
+    protected string $aggregateId;
     /** @var class-string<OutputContractInterface> */
     protected string $outputDtoClass;
-    protected array $translations;
     protected ?Locale $locale;
+    /** @var class-string */
+    protected string $targetEntityClass;
+    protected array $translations;
+    protected array $relations;
+    protected Filters $filters;
     protected string $outputFormat;
+    protected bool $eager;
 
-    /**
-     * Context constructor.
-     * @param string $outputFormat
-     * @param string $entityId
-     * @param class-string $targetEntityClass
-     * @param class-string<OutputContractInterface> $outputDtoClass
-     * @param array $translations
-     * @param Locale|null $locale
-     */
     public function __construct(
+        string $aggregateId,
         string $outputFormat,
-        string $entityId,
-        string $targetEntityClass,
         string $outputDtoClass,
+        string $targetEntityClass,
         array $translations = [],
-        ?Locale $locale = null,
+        array $relations = [],
+        bool $eager = false,
+        Locale $locale = null,
+        Filters $filters = null
     ) {
-        $this->entityId = $entityId;
         $this->targetEntityClass = $targetEntityClass;
         $this->outputDtoClass = $outputDtoClass;
-        $this->outputFormat = $outputFormat;
         $this->translations = $translations;
+        $this->relations = $relations;
         $this->locale = $locale;
+        $this->filters = $filters ?? new Filters();
+        $this->outputFormat = $outputFormat;
+        $this->aggregateId = $aggregateId;
+        $this->eager = $eager;
+    }
+
+    public function getFilters(): Filters
+    {
+        return $this->filters;
+    }
+
+    public function setFilters(Filters $filters): void
+    {
+        $this->filters = $filters;
     }
 
     public function getOutputFormat(): string
@@ -51,37 +63,11 @@ class Context extends AbstractContext implements QueryContextInterface
         return $this->outputFormat;
     }
 
-    public function setOutputFormat(string $outputFormat): self
+    public function setOutputFormat(string $outputFormat): void
     {
         $this->outputFormat = $outputFormat;
-        return $this;
     }
 
-    public function getTranslations(): array
-    {
-        return $this->translations;
-    }
-
-    public function setTranslations(TranslationDto $translations): self
-    {
-        $this->translations = $translations->getRules();
-        return $this;
-    }
-
-    public function getEntityId(): string
-    {
-        return $this->entityId;
-    }
-
-    public function setEntityId(string $entityId): self
-    {
-        $this->entityId = $entityId;
-        return $this;
-    }
-
-    /**
-     * @return class-string
-     */
     public function getTargetEntityClass(): string
     {
         return $this->targetEntityClass;
@@ -89,14 +75,40 @@ class Context extends AbstractContext implements QueryContextInterface
 
     /**
      * @param class-string $targetEntityClass
-     * @return $this
      */
-    public function setTargetEntityClass(string $targetEntityClass): self
+    public function setTargetEntityClass(string $targetEntityClass): void
     {
         $this->targetEntityClass = $targetEntityClass;
-        return $this;
     }
 
+    public function getTranslations(): array
+    {
+        return $this->translations;
+    }
+
+    public function setTranslations(array $translations): void
+    {
+        $this->translations = $translations;
+    }
+
+    public function getRelations(): array
+    {
+        return $this->relations;
+    }
+
+    public function setRelations(array $relations): void
+    {
+        $this->relations = $relations;
+    }
+
+    public function hasLocale(): bool
+    {
+        return $this->locale !== null;
+    }
+
+    /**
+     * @return class-string<OutputContractInterface>
+     */
     public function getOutputDtoClass(): string
     {
         return $this->outputDtoClass;
@@ -119,8 +131,23 @@ class Context extends AbstractContext implements QueryContextInterface
         return $this;
     }
 
-    public function hasLocale(): bool
+    public function getAggregateId(): string
     {
-        return $this->locale !== null;
+        return $this->aggregateId;
+    }
+
+    public function setAggregateId(string $aggregateId): void
+    {
+        $this->aggregateId = $aggregateId;
+    }
+
+    public function isEager(): bool
+    {
+        return $this->eager;
+    }
+
+    public function setEager(bool $eager): void
+    {
+        $this->eager = $eager;
     }
 }

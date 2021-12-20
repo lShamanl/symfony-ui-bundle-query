@@ -2,19 +2,37 @@
 
 declare(strict_types=1);
 
-namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyBundle\UIBundle\Foundation\Core\Contract\ApiFormatter;
 use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
 use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
 use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\AbstractProcessor;
-use Doctrine\ORM\EntityNotFoundException;
+use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Search\Context;
+use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\FetcherFactory;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Filter;
 
 class Processor extends AbstractProcessor
 {
+    public function __construct(
+        EventDispatcherInterface $dispatcher,
+        SerializerInterface $serializer,
+        EntityManagerInterface $entityManager,
+        TranslatorInterface $translator,
+        Locale $defaultLocale,
+        FetcherFactory $fetcherFactory
+    ) {
+        parent::__construct($dispatcher, $serializer, $entityManager, $translator, $defaultLocale);
+        $this->fetcherFactory = $fetcherFactory;
+    }
+
     /**
      * @param Context $actionContext
-     * @throws EntityNotFoundException
      * @throws \JsonException
      */
     public function process(AbstractContext $actionContext): void
@@ -23,13 +41,20 @@ class Processor extends AbstractProcessor
             $actionContext->setLocale($this->defaultLocale);
         }
 
-        #todo: тут можно сделать жадную загрузку как в Search по ID
-        $entity = $this->getEntityById(
-            $actionContext->getEntityId(),
-            $actionContext->getTargetEntityClass()
+        $aggregateId = $actionContext->getAggregateId();
+
+        $fetcher = $this->fetcherFactory->forEntity($actionContext->getTargetEntityClass());
+        $filters = $actionContext->getFilters();
+
+        $fetcher->addFilters($filters);
+
+        $aggregate = $fetcher->getById(
+            $aggregateId,
+            $actionContext->getEagerMode(),
+            $actionContext->getRelations()
         );
 
-        $output = $this->createOutput($actionContext, $entity);
+        $output = $this->createOutput($actionContext, $aggregate);
 
         if (!empty($actionContext->getTranslations()) && $actionContext->hasLocale()) {
             /** @var Locale $locale */
@@ -51,24 +76,5 @@ class Processor extends AbstractProcessor
         $this->responseHeaders = [
             'Content-Type' => "application/" . $actionContext->getOutputFormat()
         ];
-    }
-
-    /**
-     * @param string $id
-     * @param class-string $entityClass
-     * @return object
-     * @throws EntityNotFoundException
-     */
-    protected function getEntityById(string $id, string $entityClass): object
-    {
-        /** @var string $idPropertyName */
-        $idPropertyName = current($this->entityManager->getClassMetadata($entityClass)->identifier);
-        if (!$entity = $this->entityManager->getRepository($entityClass)->findOneBy([$idPropertyName => $id])) {
-            $classnameExplode = explode('\\', $entityClass);
-            $classname = end($classnameExplode);
-            throw new EntityNotFoundException("{$classname} with id {$id} not exist");
-        }
-
-        return $entity;
     }
 }

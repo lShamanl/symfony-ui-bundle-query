@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
+use Doctrine\ORM\QueryBuilder;
 use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
 use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
 use Doctrine\DBAL\Exception;
@@ -122,41 +123,13 @@ class Fetcher
             ->setParameter('id', $id);
 
         if ($eager) {
-            $uniqueAssocRelations = array_unique(
-                array_map(static function (string $property) {
-                    $explodeProperty = explode('.', $property);
-                    array_pop($explodeProperty);
-                    return implode('.', $explodeProperty);
-                }, $this->context->getEntityAssociationWhiteList())
-            );
-
-            if (empty($relations)) {
-                $assocRelations = $uniqueAssocRelations;
-            } else {
-                $assocRelations = array_intersect($relations, $uniqueAssocRelations);
-            }
-
-            $joins = [];
-            foreach ($assocRelations as $propertyPath) {
-                $explodePropertyPath = explode('.', $propertyPath);
-                for ($level = 1, $levelMax = count($explodePropertyPath); $level <= $levelMax; $level++) {
-                    $relationPath = Helper::makeRelationPath($explodePropertyPath, $level);
-                    $path = Helper::makeAliasPathFromPropertyPath("$aggregateAlias.$relationPath");
-                    $alias = Helper::pathToAlias($path);
-
-                    if (in_array($alias, $joins, true)) {
-                        continue;
-                    }
-                    $qb->leftJoin($path, $alias)->addSelect($alias);
-                    $joins[] = $alias;
-                }
-            }
+            $this->addEagerQueryToRelations($relations, $qb);
         }
 
         return $qb->getQuery()->getResult()[0];
     }
 
-    public function getByIds(array $ids, Sorts $sorts, bool $eager = true): array
+    public function getByIds(array $ids, Sorts $sorts, bool $eager = true, array $relations = []): array
     {
         $aggregateAlias = self::AGGREGATE_ALIAS;
         $idPropertyName = $this->entityClassMetadata->identifier[0];
@@ -177,36 +150,48 @@ class Fetcher
         }
 
         if ($eager) {
-            $uniqueAssocRelations = array_unique(
-                array_map(static function (string $property) {
-                    $explodeProperty = explode('.', $property);
-                    array_pop($explodeProperty);
-                    return implode('.', $explodeProperty);
-                }, $this->context->getEntityAssociationWhiteList())
-            );
-            $joins = [];
-            foreach ($uniqueAssocRelations as $propertyPath) {
-                $explodePropertyPath = explode('.', $propertyPath);
-                for ($level = 1, $levelMax = count($explodePropertyPath); $level <= $levelMax; $level++) {
-                    $relationPath = Helper::makeRelationPath($explodePropertyPath, $level);
-                    $path = Helper::makeAliasPathFromPropertyPath("$aggregateAlias.$relationPath");
-                    $alias = Helper::pathToAlias($path);
-
-                    if (in_array($alias, $joins, true)) {
-                        continue;
-                    }
-                    $qb->leftJoin($path, $alias)->addSelect($alias);
-                    $joins[] = $alias;
-                }
-            }
+            $this->addEagerQueryToRelations($relations, $qb);
         }
 
         return $qb->getQuery()->getResult();
     }
 
+    protected function addEagerQueryToRelations(array $relations, QueryBuilder $qb): void
+    {
+        $aggregateAlias = self::AGGREGATE_ALIAS;
+        $uniqueAssocRelations = array_unique(
+            array_map(static function (string $property) {
+                $explodeProperty = explode('.', $property);
+                array_pop($explodeProperty);
+                return implode('.', $explodeProperty);
+            }, $this->context->getEntityAssociationWhiteList())
+        );
+
+        if (empty($relations)) {
+            $assocRelations = $uniqueAssocRelations;
+        } else {
+            $assocRelations = array_intersect($relations, $uniqueAssocRelations);
+        }
+
+        $joins = [];
+        foreach ($assocRelations as $propertyPath) {
+            $explodePropertyPath = explode('.', $propertyPath);
+            for ($level = 1, $levelMax = count($explodePropertyPath); $level <= $levelMax; $level++) {
+                $relationPath = Helper::makeRelationPath($explodePropertyPath, $level);
+                $path = Helper::makeAliasPathFromPropertyPath("$aggregateAlias.$relationPath");
+                $alias = Helper::pathToAlias($path);
+
+                if (in_array($alias, $joins, true)) {
+                    continue;
+                }
+                $qb->leftJoin($path, $alias)->addSelect($alias);
+                $joins[] = $alias;
+            }
+        }
+    }
+
     /**
      * @return array<string>
-     * @throws \Doctrine\DBAL\Driver\Exception
      * @throws Exception
      */
     public function searchEntityIds(): array
@@ -215,13 +200,13 @@ class Fetcher
         // например, чтобы подсунуть Elastic и ускорить за счет этого общее время поиска
         $query = $this->getSearchQuery();
         $idColumnName = current($this->entityClassMetadata->identifier);
-        return array_map(function (array $result) use ($idColumnName) {
+        return array_map(static function (array $result) use ($idColumnName) {
             return $result["{$idColumnName}_0"];
         }, $this->entityManager->getConnection()
             ->executeQuery(
                 $query->getSQL(),
                 array_map(
-                    function (Parameter $parameter) {
+                    static function (Parameter $parameter) {
                         return $parameter->getValue();
                     },
                     $query->getParameters()->toArray()
