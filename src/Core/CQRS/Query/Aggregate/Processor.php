@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

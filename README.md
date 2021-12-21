@@ -70,7 +70,7 @@ filter[emails.email][in][]='0891d11b6a952a3804e7cb8a220d0a9b@mail.ru'
 
 ## Внутреннее использование:
 ### Query:
-#### GetOne:
+#### Aggregate:
 Пример Read-action:
 ```php
 use App\Path\To\Entity;
@@ -79,8 +79,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use SymfonyBundle\UIBundle\Foundation\Core\Contract\ApiFormatter;
 use SymfonyBundle\UIBundle\Foundation\Core\Dto\OutputFormat;
-use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne\Processor as GetOneProcessor;
-use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne\Context as GetOneContext;
+use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate\Processor as AggregateProcessor;
+use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate\Context as AggregateContext;
 
 class Controller {
     /**
@@ -111,10 +111,10 @@ class Controller {
      */
     public function read(
         string $id,
-        GetOneProcessor $processor,
+        AggregateProcessor $processor,
         OutputFormat $outputFormat
     ): Response {
-        $context = new GetOneContext(
+        $context = new AggregateContext(
             outputFormat: $outputFormat->getFormat(),
             entityId: $id,
             targetEntityClass: User::class,

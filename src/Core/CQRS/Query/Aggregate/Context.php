@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\GetOne;
+namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate;
 
 use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
 use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
 use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
 use SymfonyBundle\UIBundle\Query\Core\Components\Interfaces\QueryContextInterface;
 use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
-use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
-use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Pagination;
 
 class Context extends AbstractContext implements QueryContextInterface
 {

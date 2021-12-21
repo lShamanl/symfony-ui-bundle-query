@@ -37,7 +37,7 @@ class Processor extends AbstractProcessor
     public function deleteFilterInBlackList(Filters $filters, array $blackList): Filters
     {
         $filterList = array_filter($filters->toArray(), static function (Filter $filter) use ($blackList) {
-            return !in_array($filter->getProperty(), $blackList);
+            return !in_array($filter->getProperty(), $blackList, true);
         });
 
         return new Filters($filterList);
@@ -56,8 +56,8 @@ class Processor extends AbstractProcessor
 
     /**
      * @param Context $actionContext
-     * @throws \Doctrine\DBAL\Driver\Exception
      * @throws Exception
+     * @throws \JsonException
      */
     public function process(AbstractContext $actionContext): void
     {

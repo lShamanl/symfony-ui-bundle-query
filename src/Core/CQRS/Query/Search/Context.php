@@ -32,6 +32,7 @@ class Context extends AbstractContext implements QueryContextInterface
     protected Sorts $sorts;
     protected bool $eager;
     protected string $outputFormat;
+    protected array $relations;
 
     /**
      * Context constructor.
@@ -42,6 +43,7 @@ class Context extends AbstractContext implements QueryContextInterface
      * @param Closure|null $entityCallback
      * @param array $filterAliases
      * @param array $translations
+     * @param array $relations
      * @param Locale|null $locale
      * @param Pagination|null $pagination
      * @param Filters|null $filters
@@ -56,6 +58,7 @@ class Context extends AbstractContext implements QueryContextInterface
         Closure $entityCallback = null,
         array $filterAliases = [],
         array $translations = [],
+        array $relations = [],
         Locale $locale = null,
         Pagination $pagination = null,
         Filters $filters = null,
@@ -74,6 +77,7 @@ class Context extends AbstractContext implements QueryContextInterface
         $this->sorts = $sorts ?? new Sorts();
         $this->eager = $eager;
         $this->outputFormat = $outputFormat;
+        $this->relations = $relations;
     }
 
     public function getOutputFormat(): string
@@ -220,5 +224,15 @@ class Context extends AbstractContext implements QueryContextInterface
     public function hasLocale(): bool
     {
         return $this->locale !== null;
+    }
+
+    public function getRelations(): array
+    {
+        return $this->relations;
+    }
+
+    public function setRelations(array $relations): void
+    {
+        $this->relations = $relations;
     }
 }
