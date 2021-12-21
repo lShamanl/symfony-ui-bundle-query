@@ -33,6 +33,7 @@ class Context extends AbstractContext implements QueryContextInterface
     protected bool $eager;
     protected string $outputFormat;
     protected array $relations;
+    protected ?Closure $outputDataPrepareCallback;
 
     /**
      * Context constructor.
@@ -59,6 +60,7 @@ class Context extends AbstractContext implements QueryContextInterface
         array $filterAliases = [],
         array $translations = [],
         array $relations = [],
+        ?Closure $outputDataPrepareCallback = null,
         Locale $locale = null,
         Pagination $pagination = null,
         Filters $filters = null,
@@ -78,6 +80,7 @@ class Context extends AbstractContext implements QueryContextInterface
         $this->eager = $eager;
         $this->outputFormat = $outputFormat;
         $this->relations = $relations;
+        $this->outputDataPrepareCallback = $outputDataPrepareCallback;
     }
 
     public function getOutputFormat(): string
@@ -234,5 +237,15 @@ class Context extends AbstractContext implements QueryContextInterface
     public function setRelations(array $relations): void
     {
         $this->relations = $relations;
+    }
+
+    public function getOutputDataPrepareCallback(): ?Closure
+    {
+        return $this->outputDataPrepareCallback;
+    }
+
+    public function setOutputDataPrepareCallback(?Closure $outputDataPrepareCallback): void
+    {
+        $this->outputDataPrepareCallback = $outputDataPrepareCallback;
     }
 }

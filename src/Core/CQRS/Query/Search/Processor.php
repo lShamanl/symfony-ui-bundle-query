@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Pagination;
 
 class Processor extends AbstractProcessor
 {
@@ -105,16 +106,13 @@ class Processor extends AbstractProcessor
             }, $entities);
         }
 
+        $outputDataPrepareCallback = $actionContext->getOutputDataPrepareCallback() === null
+            ? $this->outputDataPrepareCallback()
+            : $actionContext->getOutputDataPrepareCallback()
+        ;
+
         $this->responseContent = $this->serializer->serialize(
-            ApiFormatter::prepare([
-                'entities' => $entities,
-                'pagination' => [
-                    'count' => $count,
-                    'totalPages' => (int) ceil($count / $pagination->getPageSize()),
-                    'page' => $pagination->getPageNumber(),
-                    'size' => count($entities),
-                ]
-            ]),
+            $outputDataPrepareCallback($entities, $count, $pagination),
             $actionContext->getOutputFormat()
         );
         $this->responseHeaders = [
@@ -141,5 +139,20 @@ class Processor extends AbstractProcessor
                 $callback($entity);
             }
         }
+    }
+
+    protected function outputDataPrepareCallback(): callable
+    {
+        return static function (array $entities, int $count, Pagination $pagination) {
+            return ApiFormatter::prepare([
+                'entities' => $entities,
+                'pagination' => [
+                    'count' => $count,
+                    'totalPages' => (int) ceil($count / $pagination->getPageSize()),
+                    'page' => $pagination->getPageNumber(),
+                    'size' => count($entities),
+                ]
+            ]);
+        };
     }
 }

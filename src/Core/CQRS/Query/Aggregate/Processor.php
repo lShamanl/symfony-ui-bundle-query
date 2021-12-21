@@ -69,12 +69,24 @@ class Processor extends AbstractProcessor
             );
         }
 
+        $outputDataPrepareCallback = $actionContext->getOutputDataPrepareCallback() === null
+            ? $this->outputDataPrepareCallback()
+            : $actionContext->getOutputDataPrepareCallback()
+        ;
+
         $this->responseContent = $this->serializer->serialize(
-            ApiFormatter::prepare(['entity' => $output]),
+            $outputDataPrepareCallback($output),
             $actionContext->getOutputFormat()
         );
         $this->responseHeaders = [
             'Content-Type' => "application/" . $actionContext->getOutputFormat()
         ];
+    }
+
+    protected function outputDataPrepareCallback(): callable
+    {
+        return static function ($output) {
+            return ApiFormatter::prepare(['entity' => $output]);
+        };
     }
 }

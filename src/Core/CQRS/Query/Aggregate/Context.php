@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Aggregate;
 
+use Closure;
 use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
 use SymfonyBundle\UIBundle\Foundation\Core\Contract\OutputContractInterface;
 use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
@@ -23,6 +24,7 @@ class Context extends AbstractContext implements QueryContextInterface
     protected Filters $filters;
     protected string $outputFormat;
     protected bool $eager;
+    protected ?Closure $outputDataPrepareCallback;
 
     public function __construct(
         string $aggregateId,
@@ -32,6 +34,7 @@ class Context extends AbstractContext implements QueryContextInterface
         array $translations = [],
         array $relations = [],
         bool $eager = false,
+        ?Closure $outputDataPrepareCallback = null,
         Locale $locale = null,
         Filters $filters = null
     ) {
@@ -44,6 +47,7 @@ class Context extends AbstractContext implements QueryContextInterface
         $this->outputFormat = $outputFormat;
         $this->aggregateId = $aggregateId;
         $this->eager = $eager;
+        $this->outputDataPrepareCallback = $outputDataPrepareCallback;
     }
 
     public function getFilters(): Filters
@@ -148,5 +152,15 @@ class Context extends AbstractContext implements QueryContextInterface
     {
         $this->eager = $eager;
         return $this;
+    }
+
+    public function getOutputDataPrepareCallback(): ?Closure
+    {
+        return $this->outputDataPrepareCallback;
+    }
+
+    public function setOutputDataPrepareCallback(?Closure $outputDataPrepareCallback): void
+    {
+        $this->outputDataPrepareCallback = $outputDataPrepareCallback;
     }
 }
