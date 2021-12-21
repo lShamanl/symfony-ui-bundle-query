@@ -12,10 +12,7 @@ use SymfonyBundle\UIBundle\Foundation\Core\Contract\ApiFormatter;
 use SymfonyBundle\UIBundle\Foundation\Core\Dto\Locale;
 use SymfonyBundle\UIBundle\Foundation\Core\Components\AbstractContext;
 use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\AbstractProcessor;
-use SymfonyBundle\UIBundle\Query\Core\CQRS\Query\Search\Context;
-use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
 use SymfonyBundle\UIBundle\Query\Core\Service\Filter\FetcherFactory;
-use SymfonyBundle\UIBundle\Query\Core\Service\Filter\Filter;
 
 class Processor extends AbstractProcessor
 {
