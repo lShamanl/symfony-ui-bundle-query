@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SymfonyBundle\UIBundle\Query\Core\Service\Filter;
 
 use Doctrine\ORM\QueryBuilder;
+use SymfonyBundle\UIBundle\Foundation\Core\Components\Exception\DomainException;
 use SymfonyBundle\UIBundle\Query\Core\Dto\Filters;
 use SymfonyBundle\UIBundle\Query\Core\Dto\Sorts;
 use Doctrine\DBAL\Exception;
@@ -125,8 +126,11 @@ class Fetcher
         if ($eager) {
             $this->addEagerQueryToRelations($relations, $qb);
         }
-
-        return $qb->getQuery()->getResult()[0];
+        $result = $qb->getQuery()->getResult();
+        if (empty($result)) {
+            throw new DomainException("Entity with {$idPropertyName} '{$id}' not exist");
+        }
+        return current($result);
     }
 
     public function getByIds(array $ids, Sorts $sorts, bool $eager = true, array $relations = []): array
