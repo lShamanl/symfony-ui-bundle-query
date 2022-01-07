@@ -145,7 +145,7 @@ class Processor extends AbstractProcessor
     {
         return static function (array $entities, int $count, Pagination $pagination) {
             return ApiFormatter::prepare([
-                'entities' => $entities,
+                'data' => $entities,
                 'pagination' => [
                     'count' => $count,
                     'totalPages' => (int) ceil($count / $pagination->getPageSize()),

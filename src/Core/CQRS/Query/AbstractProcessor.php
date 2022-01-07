@@ -40,9 +40,15 @@ abstract class AbstractProcessor extends \SymfonyBundle\UIBundle\Foundation\Core
         $outputDtoClass = $actionContext->getOutputDtoClass();
         $outputDtoIsLocalization = is_subclass_of($outputDtoClass, LocalizationOutputContractInterface::class);
         if ($outputDtoIsLocalization && $actionContext->hasLocale()) {
+            if (method_exists($outputDtoClass, 'create')) {
+                return $outputDtoClass::create($entity, $actionContext->getLocale()?->getPriorityLang());
+            }
             return new $outputDtoClass($entity, $actionContext->getLocale()?->getPriorityLang());
         }
 
+        if (method_exists($outputDtoClass, 'create')) {
+            return $outputDtoClass::create($entity);
+        }
         return new $outputDtoClass($entity);
     }
 }

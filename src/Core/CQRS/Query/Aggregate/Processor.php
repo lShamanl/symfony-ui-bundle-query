@@ -83,7 +83,7 @@ class Processor extends AbstractProcessor
     protected function outputDataPrepareCallback(): callable
     {
         return static function ($output) {
-            return ApiFormatter::prepare(['entity' => $output]);
+            return ApiFormatter::prepare($output);
         };
     }
 }
